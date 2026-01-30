@@ -31,6 +31,8 @@ public enum StorageExpiration: Sendable {
 
 ```
 
+<br>
+
 ### estimatedExpirationSince
 
 > 특정 일자 기준으로 예상 만료일을 확인하는 메서드
@@ -55,6 +57,8 @@ public enum StorageExpiration: Sendable {
       }
   }
 ```
+
+<br>
 
 ### estimatedExpirationSinceNow
 
@@ -83,6 +87,8 @@ var isExpired: Bool {
 }
 ```
 
+<br>
+
 ### timeInterval
 
 ```swift
@@ -96,6 +102,8 @@ var timeInterval: TimeInterval {
     }
 }
 ```
+
+<br>
 
 ## ExpirationExtending
 
@@ -114,6 +122,8 @@ public enum ExpirationExtending: Sendable {
 }
 ```
 
+<br>
+
 ## CacheCostCalculable
 
 > 메모리 캐시에서 객체의 비용을 계산해 eviction 판단에 활용하기 위한 타입
@@ -127,6 +137,8 @@ public protocol CacheCostCalculable {
     var cacheCost: Int { get }
 }
 ```
+
+<br>
 
 ## DataTransformable
 
