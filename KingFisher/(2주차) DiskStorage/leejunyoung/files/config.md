@@ -1,9 +1,6 @@
-<aside>
-💡
-
-디스크 캐시의 동작 정책과 환경을 정의하는 설정 값
-
-</aside>
+> 💡
+> 
+> 디스크 캐시의 동작 정책과 환경을 정의하는 설정 값
 
 ```swift
     public struct Config: @unchecked Sendable {

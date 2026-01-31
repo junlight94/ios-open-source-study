@@ -45,14 +45,11 @@ public var config: Config {
 
 ## metaChangingQueue
 
-<aside>
-💡
-
-`metaChangingQueue`는 캐시 hit을 느리게 만들지 않기 위해, 파일 메타데이터 갱신을 “비동기(async)”로 미루는 전용 시리얼 큐
-
-`value(forKey:)`에서 **캐시를 읽은 직후** 실행됩니다.
-
-</aside>
+> 💡
+> 
+> `metaChangingQueue`는 캐시 hit을 느리게 만들지 않기 위해, 파일 메타데이터 갱신을 "비동기(async)"로 미루는 전용 시리얼 큐
+> 
+> `value(forKey:)`에서 **캐시를 읽은 직후** 실행됩니다.
 
 캐시된 객체를 반환하는 과정은 막지 않기 위해, 객체는 즉시 리턴하고
 
@@ -66,12 +63,9 @@ let metaChangingQueue: DispatchQueue
 
 ## maybeCached
 
-<aside>
-💡
-
-“디스크에 없을 게 확실한 요청”을 디스크 접근 전에 메모리에서 즉시 컷하는 필터 역할
-
-</aside>
+> 💡
+> 
+> "디스크에 없을 게 확실한 요청"을 디스크 접근 전에 메모리에서 즉시 컷하는 필터 역할
 
 1. `setupCacheChecking`에서 FileManager에 있는 캐싱 데이터를 읽어서 저장
 2. store(저장) 성공시 `maybeCached`에 저장
@@ -85,14 +79,11 @@ let metaChangingQueue: DispatchQueue
 
 ## maybeCachedCheckingQueue
 
-<aside>
-💡
-
-`maybeCached` 접근을 보호하는 **전용 시리얼 큐**
-
-Set은 Thread-safe가 아니기 때문에
-
-</aside>
+> 💡
+> 
+> `maybeCached` 접근을 보호하는 **전용 시리얼 큐**
+> 
+> Set은 Thread-safe가 아니기 때문에
 
 ```swift
 DispatchQueue(label: "com.onevcat.Kingfisher.maybeCachedCheckingQueue")
@@ -102,12 +93,9 @@ DispatchQueue(label: "com.onevcat.Kingfisher.maybeCachedCheckingQueue")
 
 ## storageReady
 
-<aside>
-💡
-
-런타임 보호용 플래그
-
-</aside>
+> 💡
+> 
+> 런타임 보호용 플래그
 
 생성자는 기본적으로 throw하지 않고 객체를 만든 뒤, `prepareDirectory`에서 디렉토리 생성에 실패하면
 

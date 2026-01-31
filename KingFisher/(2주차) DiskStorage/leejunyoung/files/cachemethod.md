@@ -1,11 +1,8 @@
 ## store
 
-<aside>
-💡
-
-값을 디스크 캐시에 직렬화해 저장하고, 만료 정책과 파일 메타데이터를 함께 설정하는 저장 API
-
-</aside>
+> 💡
+> 
+> 값을 디스크 캐시에 직렬화해 저장하고, 만료 정책과 파일 메타데이터를 함께 설정하는 저장 API
 
 ```swift
 public func store(
@@ -119,12 +116,9 @@ attribute에 캐시 메타 저장
 
 ## value
 
-<aside>
-💡
-
-디스크 캐시에서 값을 조회하고, 만료 여부를 검사한 뒤 필요하면 데이터를 로드하며, 접근에 따라 만료 시간을 연장하는 조회 API
-
-</aside>
+> 💡
+> 
+> 디스크 캐시에서 값을 조회하고, 만료 여부를 검사한 뒤 필요하면 데이터를 로드하며, 접근에 따라 만료 시간을 연장하는 조회 API
 
 ```swift
 func value(
@@ -234,12 +228,9 @@ init 단계에서 실패시 `false`, 디렉토리 생성 실패 이력이 있으
 
 ## isCached
 
-<aside>
-💡
-
-디스크 캐시에 해당 키의 유효한 값이 존재하는지만 빠르게 확인하는 API
-
-</aside>
+> 💡
+> 
+> 디스크 캐시에 해당 키의 유효한 값이 존재하는지만 빠르게 확인하는 API
 
 ```swift
 public func isCached(forKey key: String, referenceDate: Date, forcedExtension: String? = nil) -> Bool {
@@ -266,12 +257,9 @@ public func isCached(forKey key: String, referenceDate: Date, forcedExtension: S
 
 ## remove, removeFile
 
-<aside>
-💡
-
-캐시 삭제 API
-
-</aside>
+> 💡
+> 
+> 캐시 삭제 API
 
 ```swift
 public func remove(forKey key: String, forcedExtension: String? = nil) throws {
@@ -288,12 +276,9 @@ func removeFile(at url: URL) throws {
 
 ## removeAll
 
-<aside>
-💡
-
-removeAll은 캐시 디렉토리 전체를 삭제하는 API
-
-</aside>
+> 💡
+> 
+> removeAll은 캐시 디렉토리 전체를 삭제하는 API
 
 ```swift
 func removeAll(skipCreatingDirectory: Bool) throws {

@@ -1,11 +1,8 @@
 ## setupCacheChecking
 
-<aside>
-💡
-
-디스크 캐시 디렉토리를 한 번 스캔해서 `maybeCached` (메모리 Set)를 초기화하는 메서드
-
-</aside>
+> 💡
+> 
+> 디스크 캐시 디렉토리를 한 번 스캔해서 `maybeCached` (메모리 Set)를 초기화하는 메서드
 
 ```swift
 private func setupCacheChecking() {
@@ -33,12 +30,9 @@ private func setupCacheChecking() {
 
 ## prepareDirectory
 
-<aside>
-💡
-
-디스크 캐시 디렉토리가 이미 있으면 그대로 두고, 없으면 생성하는 메서드
-
-</aside>
+> 💡
+> 
+> 디스크 캐시 디렉토리가 이미 있으면 그대로 두고, 없으면 생성하는 메서드
 
 캐시 디렉토리가 준비돼 있는지 보장하고, 실패하면 이 스토리지를 비활성화하는 초기화 단계
 

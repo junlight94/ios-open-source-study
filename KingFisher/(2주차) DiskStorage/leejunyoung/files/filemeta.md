@@ -1,9 +1,6 @@
-<aside>
-💡
-
-디스크 캐시 파일 하나의 메타데이터를 파일 attribute 기반으로 표현한 값 타입
-
-</aside>
+> 💡
+> 
+> 디스크 캐시 파일 하나의 메타데이터를 파일 attribute 기반으로 표현한 값 타입
 
 ```swift
     struct FileMeta {

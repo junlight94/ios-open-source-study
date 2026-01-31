@@ -1,11 +1,8 @@
 ## **convenience** **init**
 
-<aside>
-💡
-
-호출자가 에러를 처리할 수 있는 경우에 사용
-
-</aside>
+> 💡
+> 
+> 호출자가 에러를 처리할 수 있는 경우에 사용
 
 안전한 생성 경로(noThrowConfig)로 객체를 먼저 초기화한 뒤,
 
@@ -24,12 +21,9 @@ public convenience init(config: Config) throws {
 
 ## init
 
-<aside>
-💡
-
-앱을 죽이지 않기 위한 안전한 생성 경로
-
-</aside>
+> 💡
+> 
+> 앱을 죽이지 않기 위한 안전한 생성 경로
 
 내부 전용의 throw 하지 않는 생성자를 통해 객체는 항상 생성되고, 디렉토리 생성은 `try?`로 best-effort로 시도한다.
 

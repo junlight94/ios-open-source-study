@@ -1,11 +1,8 @@
 ## cacheFileURL
 
-<aside>
-💡
-
-CRUD 전체에서 사용하는 파일 위치 계산하는 메서드
-
-</aside>
+> 💡
+> 
+> CRUD 전체에서 사용하는 파일 위치 계산하는 메서드
 
 ```swift
 public func cacheFileURL(forKey key: String, forcedExtension: String? = nil) -> URL {
@@ -18,12 +15,9 @@ public func cacheFileURL(forKey key: String, forcedExtension: String? = nil) -> 
 
 ## cacheFileName
 
-<aside>
-💡
-
-캐시 key를 실제 디스크 파일 이름으로 변환하는 메서드
-
-</aside>
+> 💡
+> 
+> 캐시 key를 실제 디스크 파일 이름으로 변환하는 메서드
 
 ```swift
 func cacheFileName(forKey key: String, forcedExtension: String? = nil) -> String {
@@ -41,12 +35,9 @@ func cacheFileName(forKey key: String, forcedExtension: String? = nil) -> String
 
 ## fileExtension
 
-<aside>
-💡
-
-캐시 파일 이름에 붙일 확장자를 우선순위 규칙에 따라 결정하는 메서드
-
-</aside>
+> 💡
+> 
+> 캐시 파일 이름에 붙일 확장자를 우선순위 규칙에 따라 결정하는 메서드
 
 ```swift
 func fileExtension(key: String, forcedExtension: String?) -> String? {
@@ -72,12 +63,9 @@ func fileExtension(key: String, forcedExtension: String?) -> String? {
 
 ## allFileURLs
 
-<aside>
-💡
-
-캐시 디렉토리 아래에 있는 모든 파일(및 하위 항목)의 URL을 열거해 반환하는 메서드
-
-</aside>
+> 💡
+> 
+> 캐시 디렉토리 아래에 있는 모든 파일(및 하위 항목)의 URL을 열거해 반환하는 메서드
 
 ```swift
 func allFileURLs(for propertyKeys: [URLResourceKey]) throws -> [URL] {
@@ -100,14 +88,11 @@ func allFileURLs(for propertyKeys: [URLResourceKey]) throws -> [URL] {
 
 ## removeExpiredValues
 
-<aside>
-💡
-
-기준 시점(referenceDate)을 기준으로 만료된 캐시 파일들을 찾아 삭제하고,
-
-삭제된 파일들의 URL을 반환하는 정리(cleanup)
-
-</aside>
+> 💡
+> 
+> 기준 시점(referenceDate)을 기준으로 만료된 캐시 파일들을 찾아 삭제하고,
+> 
+> 삭제된 파일들의 URL을 반환하는 정리(cleanup)
 
 ```swift
 func removeExpiredValues(referenceDate: Date) throws -> [URL] {
@@ -140,16 +125,13 @@ func removeExpiredValues(referenceDate: Date) throws -> [URL] {
 
 ## removeSizeExceededValues
 
-<aside>
-💡
-
-디스크 캐시 총 용량이 제한을 초과하면,
-
-LRU(Least Recently Used) 기준으로 오래된 파일부터 삭제해서
-
-캐시 크기를 줄이는 정리(eviction) 메서드
-
-</aside>
+> 💡
+> 
+> 디스크 캐시 총 용량이 제한을 초과하면,
+> 
+> LRU(Least Recently Used) 기준으로 오래된 파일부터 삭제해서
+> 
+> 캐시 크기를 줄이는 정리(eviction) 메서드
 
 ```swift
 public func removeSizeExceededValues() throws -> [URL] {
@@ -204,12 +186,9 @@ config.sizeLimit이 0이면 사이즈 제한을 두지 않았기 때문에 빈 �
 
 ## totalSize
 
-<aside>
-💡
-
-디스크 캐시 디렉토리 안에 있는 모든 파일의 총 용량(bytes)을 계산하는 메서드
-
-</aside>
+> 💡
+> 
+> 디스크 캐시 디렉토리 안에 있는 모든 파일의 총 용량(bytes)을 계산하는 메서드
 
 `removeSizeExceededValues`에서 용량을 측정하기 위해 사용
 
