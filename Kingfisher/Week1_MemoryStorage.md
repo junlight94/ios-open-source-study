@@ -1,4 +1,4 @@
-## Week1 - 📒 Kinfisher - MemoryStorage
+## Week1 - 📒 Kinfisher - Cache(1) - MemoryStorage
 
 ### 🤔❓ MemoryStorage 타입을 왜 enum 으로 했을까?
 
