@@ -360,3 +360,143 @@ public var config: Config { // 모든 접근을 Queue를 통하도록 강제
         }
     }
     ```
+
+## Nothrow 와 throw
+
+- 오류를 발생할 수 있는 convenience init이 따로 존재함
+    
+    
+    - 일반 init의 경우에는 위의 **자동 복구 메커니즘**에 의해 에러가 발생하지 않지만 저장할 폴더를 얻거나 생성할 수 없는 경우 오류가 발생
+
+```swift
+// public API - throws 가능
+public convenience init(config: Config) throws {
+    self.init(noThrowConfig: config, creatingDirectory: false)
+    try prepareDirectory()
+}
+
+// Internal - throws 불가
+init(noThrowConfig config: Config, creatingDirectory: Bool) {
+    var config = config
+
+    let creation = Creation(config)
+    self.directoryURL = creation.directoryURL
+
+    // Break any possible retain cycle set by outside.
+    config.cachePathBlock = nil
+    _config = config
+
+    metaChangingQueue = DispatchQueue(label: creation.cacheName)
+    setupCacheChecking()
+
+    if creatingDirectory {
+        try? prepareDirectory() // 에러 무시!
+    }
+}
+```
+
+- throws  /  try? 의 차이
+    - throws - try : 에러 전파, 실패하면 에러 자체가 실패함
+    - try? : 에러 무시, 실패해도 init은 성공
+
+### 시나리오 비교
+
+- 일반 사용자가 public init으로 생성할 때는 사용자에게 명확한 성공/실패 시그널을 보내서 실패 시 사용자가 대응 가능하게 에러 정보를 제공함
+    
+    ```swift
+    // Kingfisher 내부
+    let backend = DiskStorage.Backend(
+        noThrowConfig: config,
+        creatingDirectory: true
+    )
+    // 항상 성공! (폴더 생성 실패해도)
+    
+    // 나중에 저장 시
+    try backend.store(value: data, forKey: "photo")
+    // 내부에서 폴더 재생성 시도
+    do {
+        try data.write(to: fileURL)
+    } catch {
+        if error.isFolderMissing {
+            try prepareDirectory()  // 폴더 재생성
+            try data.write(to: fileURL)  // 재시도
+        }
+    }
+    ```
+    
+- 내부 사용으로 internal init을 사용할 때는 에러를 던지지 않는 초기화가 필요함. 초기화는 무조건 성공하고 나중에 폴더 생성 재시도를 통해서 전체 앱이 크래시 나지 않게 방지
+    
+    ```swift
+    // Kingfisher 내부
+    let backend = DiskStorage.Backend(
+        noThrowConfig: config,
+        creatingDirectory: true
+    )
+    // 항상 성공! (폴더 생성 실패해도)
+    
+    // 나중에 저장 시
+    try backend.store(value: data, forKey: "photo")
+    // 내부에서 폴더 재생성 시도
+    do {
+        try data.write(to: fileURL)
+    } catch {
+        if error.isFolderMissing {
+            try prepareDirectory()  // 폴더 재생성
+            try data.write(to: fileURL)  // 재시도
+        }
+    }
+    ```
+    
+
+### prepareDirectory()를 분리한 이유
+
+- try / try?로 에러 무시 여부를 결정하기 위해서 분리
+- Throws init에서는 try로 에러를 방출하고 noThrows init은 에러 무시
+- storageReady 플래그를 이용해서 크래시 발생 방지
+    
+    ```swift
+    private var storageReady: Bool = true
+    
+    init(noThrowConfig config: Config, creatingDirectory: Bool) {
+        // ...
+        if creatingDirectory {
+            try? prepareDirectory()
+            // prepareDirectory 내부에서 실패 시
+            // self.storageReady = false로 설정
+        }
+    }
+    
+    private func prepareDirectory() throws {
+        // ...
+        do {
+            try fileManager.createDirectory(...)
+        } catch {
+            self.storageReady = false  // ← 플래그 설정
+            throw KingfisherError.cacheError(...)
+        }
+    }
+    
+    public func store(...) throws {
+        guard storageReady else {
+            throw KingfisherError.cacheError(
+                reason: .diskStorageIsNotReady(cacheURL: directoryURL)
+            )
+        }
+        // ...
+    }
+    
+    // 내부 init의 흐름
+    let backend = Backend(noThrowConfig: config, creatingDirectory: true)
+    // prepareDirectory() 실패
+    // → storageReady = false
+    // → 하지만 backend 객체는 생성됨
+    // → 나중에 store() 호출 시 에러 반환
+    
+    // 앱은 계속 실행됨! (크래시 없음)
+    ```
+    
+
+## ❓ImageCahce 내부에서의 보호
+
+메모리 캐시에서는 접근할 때 lock / unlock이 있고
+디스크 캐시는 ImageCache에서 IOqueue로 보호, 내부에서는 보호하는 로직이 없음
