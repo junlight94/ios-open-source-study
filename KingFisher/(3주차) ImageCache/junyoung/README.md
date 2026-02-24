@@ -15,3 +15,4 @@
 - [**Initializer**](files/Initializer.md)
 - [**Create Static Method**](files/CreateStaitcMethod.md)
 - [**Cache Method**](files/CacheMethod.md)
+- [**Queue**](files/Queue.md)
